@@ -1,0 +1,10 @@
+[package]
+name = "aoc-2024-rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[bin]]
+name = "aoc-2024-rust"
+path = "main.rs"
