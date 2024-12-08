@@ -47,35 +47,45 @@ fn check_num_dist(ints: Vec<i32>) -> Result<i32, String> {
 }
 
 fn check_vec_dist(mut vecs: Vec<Vec<i32>>) -> i32 {
-
     let mut total_dist = 0;
     for _ in 0..vecs[0].len() {
         let mut mins = Vec::new();
         for vec in vecs.iter_mut() {
             let min = get_min(vec).expect("Failed to find a minimum for a vector.");
-
             remove_num(vec, min);
-
             mins.push(min);
-
         }
-
         match check_num_dist(mins) {
-            Ok(dist) => total_dist = total_dist + dist,
+            Ok(dist) => total_dist += dist,
             Err(e) => eprintln!("Num Dist error: {}", e),
         }
+    }
+    total_dist
+}
 
+fn count_num_in_vec(vec: &Vec<i32>, num: i32) -> i32 {
+    vec.iter().filter(|&&x| x == num).count() as i32
+}
+
+fn check_vec_similarity(vec1: Vec<i32>, vec2: Vec<i32>) -> i32 {
+
+    let mut total_sim = 0;
+
+    for v in vec1.iter() {
+        total_sim += count_num_in_vec(&vec2, *v) * *v;
     }
 
-    total_dist
+    total_sim
 
 }
+
 
 fn main() {
     match read_data("input/day1_1.txt") {
         Ok((col1, col2)) =>
         {
-            println!("Column distance: {}", check_vec_dist(vec![col1, col2]));
+//             println!("Column distance: {}", check_vec_dist(vec![col1, col2]));
+            println!("Column similarity: {}", check_vec_similarity(col1, col2));
         },
         Err(e) => eprintln!("Error reading file: {}", e)
     }
