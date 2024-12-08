@@ -1,9 +1,10 @@
+mod utils;
+
 use std::fs::File;
 use std::io::{self, BufRead, BufReader};
 
 fn read_data(file_path: &str) -> io::Result<(Vec<i32>, Vec<i32>)> {
-    let file = File::open(file_path)?;
-    let reader = BufReader::new(file);
+    let reader: BufReader<File> = utils::file_reader(file_path)?;
     let mut l1 = Vec::new();
     let mut l2 = Vec::new();
 
